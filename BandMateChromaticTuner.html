@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <meta charset="UTF-8">
+  <title>BandMate Chromatic Tuner</title>
+</head>
+<body>
+
+  <div id="polygon"></div>
+  <div id="polygon2"></div>
+  <div id="cents"></div>
+
+  <div id="canvas-container"></div>
+
+  <div id="bottomCenter">
+    <span class="toggle-text-left">&flat;</span>
+    <!--toggle switch -->
+    <input type="checkbox" id="switch" /><label for="switch"></label>
+    <span class="toggle-text-right">&sharp;</span>
+  </div>   
+  
+  <div id="centered">
+    <div class="container hidden">
+      <div id="myDiv">
+        <div id="noteLetter"></div>
+      </div>
+      
+      <div id="staff"></div>
+    </div>
+  </div>
+
+  <div id="Help">
+  <a href="https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.bandmatetuner.com%2Fhelp%3Ffbclid%3DIwAR1_NVsStMA8zE2Yg_k7WgQY6oyrKFMWTEOVSiMsiP3CROGVoyxznJuysyM&h=AT3KC7u7d8YpnDs2qcpD3dP_FOVWXZLgPYAg6oH-p-KyUa9EjBqijWWrpWkTwhj5916fgTVTIzA9Ss5gKHcVCdpc5aEPgn4CAIh6SmZ3un9k0IW2UfsX5YI6uB6kl-lMo5UrFQ">Help</a>
+  </div>
+
+  <button id="start" class="button-3" onclick="showContainer()">Start</button>
+
+  <div class="dropdown">
+    <button id="fluteButton" class="dropbtn" onmouseover="showDropdown()">Flute<span class="triangle"></span></button>
+    <div class="dropdown-content" onmouseover="showDropdown()" onmouseout="hideDropdown()">
+      <div class="grid-container">
+        <!-- Instrument items -->
+        <div class="grid-item" onclick="changeButtonText(this)">Alto Sax</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Bari Sax</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Baritone BC</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Baritone TC</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Bass</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Bass Clarinet</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Bassoon</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Cello</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Clarinet</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Cornet</div>
+        <div class="grid-item" onclick="changeButtonText(this)">English Horn</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Euphonium BC</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Euphonium TC</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Flute</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Guitar</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Horn</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Oboe</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Recorder</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Soprano Sax</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Tenor Sax</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Trombone</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Trumpet</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Tuba</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Ukulele</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Viola</div>
+        <div class="grid-item empty"></div> <!-- Empty cell -->
+        <div class="grid-item" onclick="changeButtonText(this)">Violin</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Voice BC</div>
+        <div class="grid-item" onclick="changeButtonText(this)">Voice TC</div>
+        <div class="grid-item empty"></div> <!-- Empty cell -->
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+<script src="tuner.js"></script>
+<script>
+
+  sharpFlat = "flat";
+  function showContainer() {
+    redrawCanvas();
+    var container = document.querySelector('.container');
+    container.classList.remove('hidden');
+    var startButton = document.getElementById('start');
+    startButton.style.display = 'none';
+
+   
+    // Call the redraw function on window resize
+    window.addEventListener('resize', function() {
+      redrawCanvas();
+    });
+
+    // Call the redraw function on window visibility change
+    document.addEventListener('visibilitychange', function() {
+      redrawCanvas();
+    });
+  }
+
+  function changeButtonText(clickedItem) {
+    redrawCanvas();
+    var fluteButton = document.getElementById("fluteButton");
+    var newItemText = clickedItem.textContent;
+    fluteButton.textContent = newItemText;
+    var triangle = document.createElement("span");
+    triangle.classList.add("triangle");
+    fluteButton.appendChild(triangle);
+    hideDropdown();     
+    instrument = newItemText; // Update the instrument variable with the new text
+    switching = true;
+  }
+
+  function showDropdown() {
+    redrawCanvas();
+    var dropdownContent = document.querySelector('.dropdown-content');
+    dropdownContent.style.display = 'grid';
+  }
+
+  function hideDropdown() {
+    var dropdownContent = document.querySelector('.dropdown-content');
+    dropdownContent.style.display = 'none';
+  }    
+
+  const toggleInput = document.getElementById('switch');
+  const toggleTextRight = document.querySelector('.toggle-text-right');
+  const toggleTextLeft = document.querySelector('.toggle-text-left');
+
+  toggleInput.addEventListener('change', function() {
+    redrawCanvas();
+    if (this.checked) {
+      toggleTextRight.style.color = '#000000';
+      toggleTextLeft.style.color = '#b2afaa';
+      sharpFlat = "sharp";
+    } else {
+      toggleTextRight.style.color = '#b2afaa';
+      toggleTextLeft.style.color = '#000000';
+      sharpFlat = "flat";
+    }
+  });
+
+  // Get the container element
+  var container = document.getElementById('canvas-container');
+
+  // Create a canvas element
+  var canvas = document.createElement('canvas');
+
+  // Append the canvas to the container
+  container.appendChild(canvas);
+
+  // Get the 2D drawing context
+  var ctx = canvas.getContext('2d');
+
+  function redrawCanvas() {
+    // Set the canvas size to match the container
+    canvas.width = container.offsetWidth;
+    canvas.height = container.offsetHeight;
+
+    // Draw the content on the canvas
+    drawCanvas();
+  }
+
+  window.addEventListener('resize', handleResize);
+
+  handleResize();
+
+  function handleResize() {
+    redrawCanvas();
+  }
+
+  function drawCanvas() {
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw a line
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(canvas.width / 2, canvas.height * 0.06); // Starting coordinates
+    ctx.lineTo(canvas.width / 2, canvas.height * 0.94); // Ending coordinates
+    ctx.strokeStyle = '#ffffff'; // Set line color (white in this case)
+    ctx.stroke();
+
+    ctx.moveTo(canvas.width * 0.7, canvas.height * 0.06);
+    ctx.lineTo(canvas.width * 0.3, canvas.height * 0.06);
+    ctx.stroke();
+
+    ctx.moveTo(canvas.width * 0.7, canvas.height * 0.94);
+    ctx.lineTo(canvas.width * 0.3, canvas.height * 0.94);
+    ctx.stroke();
+
+    ctx.moveTo(canvas.width * 0.7, canvas.height * 0.456);
+    ctx.lineTo(canvas.width * 0.3, canvas.height * 0.456);
+    ctx.stroke();
+
+    ctx.moveTo(canvas.width * 0.7, canvas.height * 0.544);
+    ctx.lineTo(canvas.width * 0.3, canvas.height * 0.544);
+    ctx.stroke();
+
+    ctx.lineWidth = 6;
+    ctx.moveTo(canvas.width * 0.8, canvas.height * 0.5);
+    ctx.lineTo(canvas.width * 0.2, canvas.height * 0.5);
+    ctx.stroke();
+  }
+
+  // Call the initial canvas drawing
+  redrawCanvas();
+
+
+</script>
+</body>
+</html>

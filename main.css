@@ -1,0 +1,481 @@
+* {
+  transition: all .1s ease;
+  z-index:1;
+}
+
+body {
+    background-color: white;
+    padding-top: 0px;
+    margin-top: 0px;
+    font-family: "Times New Roman", Times, serif;
+    overflow: hidden;
+    height: 100vh;
+}
+
+@font-face {
+  font-family: "SourceSansProLight";
+  src: url("SourceSansPro-Light.ttf");
+}
+
+@font-face {
+  font-family: "SourceSansProLightItalic";
+  src: url("SourceSansPro-LightItalic.ttf");
+}
+
+#staff {
+  position: absolute;
+  top: 52%; /* Adjust the vertical position as needed */
+  transform: translateY(-50%);
+}
+.container {
+    display: flex;
+    align-items: center; /* Centers items vertically */
+    justify-content: center; /* Centers items horizontally */
+    height: 100vh; /* Adjust this value as needed */
+   margin-top: 0px;
+  }
+
+#polygon {
+   position:fixed;
+    width: 100vw;
+    height: 45px;
+   /* shape-outside: polygon(
+        10% 0, 90% 0, 87% 100%, 13% 100%, 10% 0
+    );*/
+    clip-path: polygon(
+        10% 0, 90% 0, 87% 100%, 13% 100%, 10% 0
+    );
+    background: rgb(51, 49, 50);
+    z-index: 1;
+  }
+
+  #polygon2 {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 90px; /* Adjust the width as needed */
+    height: 100vh;
+    shape-outside: polygon(
+      
+    );
+    clip-path: polygon(
+        100% 10%, 100% 90%, 0% 80%, 0% 20%, 100% 10%
+    );
+    background: rgb(51, 49, 50);
+  }
+
+  #cents {
+    position: fixed;
+    top: calc(50vh - 10px);
+    right: 100px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 30pt;
+    line-height: 20px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      height: auto;
+    }
+  }
+
+  #start:focus{
+    display: none;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .dropdown {
+    position: relative;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    position: relative;
+  display: inline-block;
+  margin: 0 auto;
+  z-index: 1;
+  }
+  
+  .dropbtn {
+    padding-top: 3px;
+  background-color: rgb(51, 49, 50);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    font-size: 30px;
+    font-style: italic;
+    z-index: 1;
+  }
+
+  
+  
+  
+  .dropdown-content {
+    display: block;
+  margin: 0 auto;
+    position: absolute;
+    min-width: 200px;
+    z-index: 1;
+    background-color: #f9f9f9;
+    border: 1px solid rgb(51, 49, 50);
+    left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 20px;
+  top:50px;
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 13px;
+    padding: 7px;
+    padding-bottom: 20px;
+  }
+  
+  .grid-item {
+    display: flex;
+    text-align: center;
+    padding: 5px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    width: 100px;
+  align-items: center;
+  justify-content: center;
+  
+  }
+
+  .dropdown-content .grid-item:not(.empty):hover {
+    background-color: rgb(153, 191, 84);
+  }
+  
+  /* Show dropdown content on hover */
+  .dropdown:hover .dropdown-content {
+    display: grid;
+  }
+  
+  /* Style the dropdown items */
+  .dropdown-content .grid-item {
+    grid-column: span 1;
+  }
+  
+  .dropdown-content .grid-item:hover {
+    background-color: #f9f9f9;
+  }
+  
+
+  .grid-item.empty {
+    background-color: transparent;
+  }
+
+  .dropbtn {
+  font-family: "SourceSansProLightItalic", serif;
+}
+
+.triangle {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid white;
+  margin-left: 5px;
+  top: -5px;
+}
+
+.dropdown-content .grid-item {
+  font-family: "SourceSansProLight", sans-serif;
+}
+
+/*toggle switch*/
+input[type=checkbox]{
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+label {
+	cursor: pointer;
+	
+	width: 120px;
+	height: 60px;
+	background: #b2afaa;
+	display: block;
+	border-radius: 100px;
+	position: relative;
+}
+
+label:after {
+	content: '';
+	position: absolute;
+	top: 2px;
+	left: 5px;
+	width: 57px;
+	height: 57px;
+	background: white;
+	border-radius: 90px;
+	transition: 0.1s;
+}
+
+input:checked + label {
+	background: #b2afaa;
+}
+
+input:checked + label:after {
+	left: calc(100% - 5px);
+	transform: translateX(-100%);
+}
+
+label:active:after {
+	width: 57px;
+}
+
+/* centering */
+#switch {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+#bottomCenter {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: fixed;
+  left: 50%;
+  bottom: 5px;
+  transform: translateX(-55%);
+  z-index=10;
+}
+
+@media (max-height: 700px) {
+  /* Your CSS rules for changing the position of the div go here */
+  #bottomCenter {
+    /* For example, you can change the top margin to reposition the div */
+    display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: fixed;
+  left: 20%;
+  bottom: 5px;
+  transform: translateX(-55%);
+  z-index=10;
+  }
+
+  #start {
+    position: absolute;
+    font-size: 60px;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+}
+
+
+
+#bottom {
+  position: absolute;
+  left: 20px;
+  bottom: 5px;
+}
+
+.toggle-text-left {
+  margin-right: 5px;
+  font-size: 75px;
+  color: Black;
+  vertical-align: middle;
+    line-height: .8;
+  
+}
+
+.toggle-text-right {
+  margin-left: 5px;
+  font-size: 75px;
+  color: #b2afaa;
+  vertical-align: middle;
+  vertical-align: middle;
+    line-height: .8;
+}
+
+#noteLetter {
+  position: absolute;
+  top: 44%; /* Adjust the vertical position as needed */
+  left: -340px; /* Adjust the distance from the left side as needed */
+  transform: translate(-50%, -50%); /* Center the element */
+  font-size: 200px; /* Adjust the font size as needed */
+}
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.start-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  z-index: 2;
+}
+
+.hidden {
+  display: none;
+}
+
+#start {
+  position: absolute;
+  font-size: 60px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+
+
+/* CSS */
+.button-3 {
+  appearance: none;
+  background-color:  #F9F9F9;
+  border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 200px;
+  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-sizing: border-box;
+  color:blackS;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+
+  font-weight: 600;
+  line-height: 20px;
+  padding: 20px 16px 30px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.button-3:focus:not(:focus-visible):not(.focus-visible) {
+  box-shadow: none;
+  outline: none;
+}
+
+.button-3:hover {
+  border: 3px solid rgba(27, 31, 35, .15);
+  background-color: #b2afaa;
+}
+
+.button-3:focus {
+  outline: none;
+}
+
+.button-3:disabled {
+  background-color: #94d3a2;
+  border-color: rgba(27, 31, 35, .1);
+  color: rgba(255, 255, 255, .8);
+  cursor: default;
+}
+
+.button-3:active {
+  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+  background-color:  #F9F9F9;
+}
+
+#centered{
+  z-index:1;
+}
+
+#switch{
+  z-index:500;
+}
+
+#canvas-container {
+  position: fixed;
+  top: 20vh;
+  right: 0;
+  width: 90px;
+  height: 60vh;
+  z-index: 9999;
+}
+
+#noteLetter sup {
+  vertical-align: super;
+  font-size: smaller;
+}
+
+#myDiv {
+  position: relative;
+}
+
+.superscript {
+  position: absolute;
+  top: -0.1em; /* Adjust the value as needed */
+  font-size: 0.5em; /* Adjust the font size as needed */
+}
+
+#Justin {
+  position: absolute;
+  top: 50vh;
+  left: 10px;
+}
+
+#Help {
+  position: absolute;
+  font-size: 15px;
+  Top: 80VH;
+  Right: 30VH;
+  background-color:  #F9F9F9;
+  border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 25px;
+  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-sizing: border-box;
+  color:blackS;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+
+  font-weight: 15px;
+  line-height: 20px;
+  padding: 10px 10px 10px 10px;
+  white-space: nowrap;
+}
+
+#Help a {
+  color: black; /* Default link color */
+  text-decoration: none; /* Remove underline */
+}
+
+#Help a:active {
+  color: blue; /* Link color when clicked */
+}
+
+
+
+
+
+  
+
+ 
+
